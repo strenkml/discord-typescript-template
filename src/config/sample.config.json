@@ -1,0 +1,12 @@
+{
+  "productionMode": true,
+  "production": {
+    "token": "",
+    "prefix": "!"
+  },
+  "nonProduction": {
+    "token": "",
+    "prefix": ".",
+    "guildId": ""
+  }
+}
