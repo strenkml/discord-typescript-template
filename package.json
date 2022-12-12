@@ -4,6 +4,7 @@
   "description": "A template for a discord.js bot written in Typescript",
   "main": "bot.js",
   "scripts": {
+    "build": "tsc",
     "runprod": "node /usr/src/app/src/bot.js",
     "rundev": "node /usr/src/app/src/bot.js",
     "rundevw": "nodemon /usr/src/app/src/bot.js",
