@@ -6,7 +6,7 @@ export default (client: Client): void => {
   client.on("interactionCreate", async (interaction: Interaction) => {
     if (!interaction.isCommand()) return;
 
-    const command = client.commands.get(interaction.commandName);
+    const command = client.slashCommands.get(interaction.commandName);
     if (!command) return;
     try {
       Logger.info(`Running command: ${interaction.commandName}`, "interactionCreate");
