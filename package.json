@@ -8,7 +8,9 @@
     "runprod": "node /usr/src/app/src/bot.js",
     "rundev": "node /usr/src/app/src/bot.js",
     "rundevw": "nodemon /usr/src/app/src/bot.js",
-    "lint": "npx eslint . --fix",
+    "lint": "npx eslint --ext .js,.ts .",
+    "lintfix": "npx eslint . --fix",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "update": "npx npm-check -u"
   },
   "repository": {
