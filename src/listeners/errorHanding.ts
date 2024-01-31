@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import Logger from "../util/Logger";
+import Logger from "stumper";
 
 export default (client: Client): void => {
   // Process UnhandledRejection

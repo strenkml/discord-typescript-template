@@ -7,20 +7,20 @@ import messageCreate from "./listeners/messageCreate";
 import interactionCreate from "./listeners/interactionCreate";
 import errorHanding from "./listeners/errorHanding";
 
-import Logger from "./util/Logger";
+import Logger from "stumper";
 
 // Check if the config file exists
 if (!Config.fileExists()) {
-  Logger.error(
-    "Config file not found! Rename src/config/sample.config.json to config.json and enter the required information!",
-    "main"
-  );
-  process.exit(1);
+    Logger.error(
+        "Config file not found! Rename src/config/sample.config.json to config.json and enter the required information!",
+        "main"
+    );
+    process.exit(1);
 }
 
 // Create Discord.js client and set our intents
 const client = new Client({
-  intents: [GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+    intents: [GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
 
 client.slashCommands = new Collection();

@@ -1,10 +1,13 @@
 import { Client } from "discord.js";
 import { REST } from "@discordjs/rest";
-import { RESTPostAPIChatInputApplicationCommandsJSONBody, Routes } from "discord-api-types/v9";
+import {
+  RESTPostAPIChatInputApplicationCommandsJSONBody,
+  Routes,
+} from "discord-api-types/v9";
 import fs from "fs";
 
 import Config from "../config/Config";
-import Logger from "../util/Logger";
+import Logger from "stumper";
 import SlashCommand from "../models/SlashCommand";
 import TextCommand from "../models/TextCommand";
 
@@ -24,9 +27,17 @@ export default (client: Client): void => {
           .put(Routes.applicationCommands(client.user.id), {
             body: slashCommands,
           })
-          .then(() => Logger.info("Successfully registered application commands for development guild.", "clientReady"))
+          .then(() =>
+            Logger.info(
+              "Successfully registered application commands for development guild.",
+              "clientReady",
+            ),
+          )
           .catch((err) => {
-            Logger.error(`Error registering application commands for development guild: ${err}`, "clientReady");
+            Logger.error(
+              `Error registering application commands for development guild: ${err}`,
+              "clientReady",
+            );
           });
       } else {
         // If the bot is in non production mode register the commands to the testing guild (changes will appear immediately)
@@ -36,22 +47,37 @@ export default (client: Client): void => {
             .put(Routes.applicationGuildCommands(client.user.id, guildId), {
               body: slashCommands,
             })
-            .then(() => Logger.info("Successfully registered application commands for production.", "clientReady"))
+            .then(() =>
+              Logger.info(
+                "Successfully registered application commands for production.",
+                "clientReady",
+              ),
+            )
             .catch((err) => {
-              Logger.error(`Error registering application commands for production: ${err}`, "clientReady");
+              Logger.error(
+                `Error registering application commands for production: ${err}`,
+                "clientReady",
+              );
             });
         } else {
-          Logger.error("Guild id missing from non production config", "clientReady");
+          Logger.error(
+            "Guild id missing from non production config",
+            "clientReady",
+          );
         }
       }
     }
   });
 };
 
-async function readSlashCommands(client: Client): Promise<Array<RESTPostAPIChatInputApplicationCommandsJSONBody>> {
+async function readSlashCommands(
+  client: Client,
+): Promise<Array<RESTPostAPIChatInputApplicationCommandsJSONBody>> {
   const commands: Array<RESTPostAPIChatInputApplicationCommandsJSONBody> = [];
 
-  const commandFiles = fs.readdirSync(`${__dirname}/../commands/slash`).filter((file) => file.endsWith(".js"));
+  const commandFiles = fs
+    .readdirSync(`${__dirname}/../commands/slash`)
+    .filter((file) => file.endsWith(".js"));
 
   for (const file of commandFiles) {
     Logger.info(`Loading slash command: ${file}`, "clientReady");
@@ -61,12 +87,17 @@ async function readSlashCommands(client: Client): Promise<Array<RESTPostAPIChatI
     client.slashCommands.set(command.name, command);
   }
 
-  Logger.info(`Successfully loaded ${commands.length} slash commands!`, "clientReady");
+  Logger.info(
+    `Successfully loaded ${commands.length} slash commands!`,
+    "clientReady",
+  );
   return commands;
 }
 
 async function readTextCommands(client: Client): Promise<void> {
-  const commandFiles = fs.readdirSync(`${__dirname}/../commands/text`).filter((file) => file.endsWith(".js"));
+  const commandFiles = fs
+    .readdirSync(`${__dirname}/../commands/text`)
+    .filter((file) => file.endsWith(".js"));
 
   for (const file of commandFiles) {
     Logger.info(`Loading text command: ${file}`, "clientReady");
@@ -75,5 +106,8 @@ async function readTextCommands(client: Client): Promise<void> {
     client.textCommands.set(command.command, command);
   }
 
-  Logger.info(`Successfully loaded ${client.textCommands.length} text commands!`, "clientReady");
+  Logger.info(
+    `Successfully loaded ${client.textCommands.length} text commands!`,
+    "clientReady",
+  );
 }

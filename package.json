@@ -25,7 +25,8 @@
     "@discordjs/rest": "^2.2.0",
     "discord-api-types": "^0.37.67",
     "discord.js": "^14.14.1",
-    "enmap": "^5.9.8"
+    "enmap": "^5.9.8",
+    "stumper": "^1.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.11",
