@@ -15,6 +15,8 @@ export default (client: Client): void => {
     // Ignores messages that dont start with the prefix
     if (!message.content.startsWith(prefix)) return;
 
+    Logger.debug("received message");
+
     const messageArray = message.content.split(" ");
     const command = messageArray[0];
     const args = messageArray.slice(1);

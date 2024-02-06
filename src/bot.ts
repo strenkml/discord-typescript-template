@@ -1,4 +1,4 @@
-import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { Client, Collection } from "discord.js";
 
 import Config from "./config/Config";
 
@@ -7,7 +7,9 @@ import messageCreate from "./listeners/messageCreate";
 import interactionCreate from "./listeners/interactionCreate";
 import errorHanding from "./listeners/errorHanding";
 
-import Logger from "stumper";
+import Logger, { LOG_LEVEL } from "stumper";
+
+Logger.setConfig({ logLevel: LOG_LEVEL.ALL });
 
 // Check if the config file exists
 if (!Config.fileExists()) {
@@ -20,11 +22,7 @@ if (!Config.fileExists()) {
 
 // Create Discord.js client and set our intents
 const client = new Client({
-  intents: [
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-  ],
+  intents: [],
 });
 
 client.slashCommands = new Collection();

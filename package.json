@@ -5,9 +5,9 @@
   "main": "bot.js",
   "scripts": {
     "build": "tsc",
-    "runprod": "node /usr/src/app/src/bot.js",
-    "rundev": "node /usr/src/app/src/bot.js",
-    "rundevw": "nodemon /usr/src/app/src/bot.js",
+    "run:prod": "node /usr/src/app/src/bot.js",
+    "run:dev": "node /usr/src/app/dist/bot.js",
+    "run:watch": "nodemon /usr/src/app/src/bot.ts",
     "lint": "npx eslint --ext .js,.ts .",
     "lintfix": "npx eslint . --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
@@ -24,8 +24,6 @@
   },
   "homepage": "https://github.com/strenkml/discord-typescript-template#readme",
   "dependencies": {
-    "@discordjs/rest": "^2.2.0",
-    "discord-api-types": "^0.37.67",
     "discord.js": "^14.14.1",
     "enmap": "^5.9.8",
     "stumper": "^1.0.2"

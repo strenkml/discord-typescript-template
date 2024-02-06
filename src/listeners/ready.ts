@@ -1,9 +1,9 @@
-import { Client } from "discord.js";
-import { REST } from "@discordjs/rest";
 import {
-  RESTPostAPIChatInputApplicationCommandsJSONBody,
+  Client,
+  REST,
   Routes,
-} from "discord-api-types/v9";
+  RESTPostAPIChatInputApplicationCommandsJSONBody,
+} from "discord.js";
 import fs from "fs";
 
 import Config from "../config/Config";
@@ -13,10 +13,10 @@ import TextCommand from "../models/TextCommand";
 
 export default (client: Client): void => {
   client.on("ready", async () => {
-    const slashCommands = readSlashCommands(client);
-    readTextCommands(client);
+    const slashCommands = await readSlashCommands(client);
+    await readTextCommands(client);
 
-    const rest = new REST({ version: "9" }).setToken(Config.getConfig().token);
+    const rest = new REST({ version: "10" }).setToken(Config.getConfig().token);
     Logger.info("Bot Online!", "clientReady");
     Logger.info("Registering guild slash commands", "clientReady");
 
@@ -29,13 +29,13 @@ export default (client: Client): void => {
           })
           .then(() =>
             Logger.info(
-              "Successfully registered application commands for development guild.",
+              "Successfully registered application commands for production.",
               "clientReady",
             ),
           )
           .catch((err) => {
             Logger.error(
-              `Error registering application commands for development guild: ${err}`,
+              `Error registering application commands for production: ${err}`,
               "clientReady",
             );
           });
@@ -49,13 +49,13 @@ export default (client: Client): void => {
             })
             .then(() =>
               Logger.info(
-                "Successfully registered application commands for production.",
+                "Successfully registered application commands for development guild.",
                 "clientReady",
               ),
             )
             .catch((err) => {
               Logger.error(
-                `Error registering application commands for production: ${err}`,
+                `Error registering application commands for development guild: ${err}`,
                 "clientReady",
               );
             });
@@ -75,11 +75,11 @@ async function readSlashCommands(
 ): Promise<Array<RESTPostAPIChatInputApplicationCommandsJSONBody>> {
   const commands: Array<RESTPostAPIChatInputApplicationCommandsJSONBody> = [];
 
-  const commandFiles = fs
+  const slashCommandFiles = fs
     .readdirSync(`${__dirname}/../commands/slash`)
     .filter((file) => file.endsWith(".js"));
 
-  for (const file of commandFiles) {
+  for (const file of slashCommandFiles) {
     Logger.info(`Loading slash command: ${file}`, "clientReady");
     const Command = await import(`../commands/slash/${file}`);
     const command: SlashCommand = new Command.default();
@@ -95,11 +95,11 @@ async function readSlashCommands(
 }
 
 async function readTextCommands(client: Client): Promise<void> {
-  const commandFiles = fs
+  const textCommandFiles = fs
     .readdirSync(`${__dirname}/../commands/text`)
     .filter((file) => file.endsWith(".js"));
 
-  for (const file of commandFiles) {
+  for (const file of textCommandFiles) {
     Logger.info(`Loading text command: ${file}`, "clientReady");
     const Command = await import(`../commands/text/${file}`);
     const command: TextCommand = new Command.default();
@@ -107,7 +107,7 @@ async function readTextCommands(client: Client): Promise<void> {
   }
 
   Logger.info(
-    `Successfully loaded ${client.textCommands.length} text commands!`,
+    `Successfully loaded ${client.textCommands.size} text commands!`,
     "clientReady",
   );
 }
