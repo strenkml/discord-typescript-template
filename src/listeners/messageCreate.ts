@@ -6,7 +6,6 @@ import Logger from "stumper";
 
 export default (client: Client): void => {
   client.on("messageCreate", async (message: Message) => {
-    Logger.debug("received message!");
     const prefix = Config.getConfig().prefix;
 
     // Ignores all bots
@@ -15,8 +14,6 @@ export default (client: Client): void => {
     if (!message.channel.isTextBased()) return;
     // Ignores messages that dont start with the prefix
     if (!message.content.startsWith(prefix)) return;
-
-    Logger.debug("received message after");
 
     const messageArray = message.content.split(" ");
     const command = messageArray[0];
