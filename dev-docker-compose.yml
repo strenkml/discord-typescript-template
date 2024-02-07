@@ -5,6 +5,4 @@ services:
       context: .
       dockerfile: dev-Dockerfile
     volumes:
-      # host:container
-      - "./data/:/usr/src/app/data"
-      - ".:/usr/src/app/src"
+      - "./src:/usr/src/app/src"

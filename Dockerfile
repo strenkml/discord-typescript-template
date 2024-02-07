@@ -9,7 +9,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npx tsc
+RUN npm run build
 
 FROM node:18
 
@@ -25,5 +25,5 @@ RUN npm install --production
 
 COPY --from=BUILDER /usr/src/build/dist src/
 
-CMD ["npm", "run", "run:prod"]
+CMD ["npm", "run", "start:prod"]
 # CMD ["tail", "-f", "/dev/null"]
