@@ -22,7 +22,7 @@ if (!Config.fileExists()) {
 
 // Create Discord.js client and set our intents
 const client = new Client({
-  intents: 512,
+  intents: 33281,
 });
 
 client.slashCommands = new Collection();
