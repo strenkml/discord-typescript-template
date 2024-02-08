@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Enmap, { EnmapOptions } from "enmap";
 import Logger from "stumper";
 
@@ -5,7 +6,6 @@ export default abstract class Database {
   protected db: Enmap;
   protected name: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(protected options: EnmapOptions<any, any>) {
     this.db = new Enmap(options);
     this.name = options.name || "Database";
@@ -17,8 +17,20 @@ export default abstract class Database {
     this.db.clear();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getAllKeysAndValues(): Array<{ key: string | number; value: any }> {
+  getNumOfKeys(): number {
+    return this.db.count;
+  }
+
+  protected getAllValues(): Array<any> {
+    const arr = Array.from(this.db);
+    return arr.map((val) => val[1]);
+  }
+
+  protected getAllKeys(): Array<string | number> {
+    return Array.from(this.db.keys());
+  }
+
+  protected getAllKeysAndValues(): Array<{ key: string | number; value: any }> {
     const arr = Array.from(this.db);
     return arr.map((val) => {
       return { key: val[0], value: val[1] };
