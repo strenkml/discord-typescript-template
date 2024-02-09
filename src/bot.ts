@@ -1,4 +1,4 @@
-import { Client, Collection } from "discord.js";
+import { Client, Collection, GatewayIntentBits } from "discord.js";
 
 import Config from "./config/Config";
 
@@ -22,7 +22,11 @@ if (!Config.fileExists()) {
 
 // Create Discord.js client and set our intents
 const client = new Client({
-  intents: 33281,
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
 client.slashCommands = new Collection();
