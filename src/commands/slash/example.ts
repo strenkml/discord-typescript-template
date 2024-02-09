@@ -10,21 +10,12 @@ export default class Example extends SlashCommand {
 
     // Set additional configuration for the command if needed
     // There is a string option for the string to be returned to the caller
-    this.data.addStringOption((option) =>
-      option
-        .setName("text")
-        .setDescription("Text to be returned")
-        .setRequired(true),
-    );
+    this.data.addStringOption((option) => option.setName("text").setDescription("Text to be returned").setRequired(true));
   }
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     // Get the value of the text string option from the interaction
-    const text: string = this.getParamValue(
-      interaction,
-      PARAM_TYPES.STRING,
-      "text",
-    );
+    const text: string = this.getParamValue(interaction, PARAM_TYPES.STRING, "text");
 
     // Reply to the user with the user supplied text
     interaction.reply(text);

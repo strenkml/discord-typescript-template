@@ -9,10 +9,7 @@ export default (client: Client): void => {
     const command = client.slashCommands.get(interaction.commandName);
     if (!command) return;
     try {
-      Logger.info(
-        `Running command: ${interaction.commandName}`,
-        "interactionCreate",
-      );
+      Logger.info(`Running command: ${interaction.commandName}`, "interactionCreate");
       await command.execute(interaction);
     } catch (error) {
       if (error) Logger.error(error);

@@ -13,20 +13,13 @@ Logger.setConfig({ logLevel: LOG_LEVEL.ALL });
 
 // Check if the config file exists
 if (!Config.fileExists()) {
-  Logger.error(
-    "Config file not found! Rename src/config/sample.config.json to config.json and enter the required information!",
-    "main",
-  );
+  Logger.error("Config file not found! Rename src/config/sample.config.json to config.json and enter the required information!", "main");
   process.exit(1);
 }
 
 // Create Discord.js client and set our intents
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
 
 client.slashCommands = new Collection();
